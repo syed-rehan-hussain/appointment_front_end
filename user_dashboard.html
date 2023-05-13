@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title> User Dashboard</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
+	<link rel="stylesheet" type="text/css" href="css/dashboardpack.css">
+	<link rel="stylesheet" type="text/css" href="css/card.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
+	<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="js/userdashboard.js"></script>
+
+</head>
+<body >
+	<div class="admin-panel">
+				
+		<div class="slidebar" style="">
+			
+			<ul>
+				<p style="margin:20px 0; text-align:center;"><a href="#profilepic" name="tab7">
+					<img src="img/logo.jpg" width="150px" height="150px" />
+				</a><p>
+				<li><a href="" name="tab1"><i class="fa fa-home"></i>General</a></li>
+				<li><a href="#profile" name="tab2"><i class="fa fa-user"></i>Profile</a></li>
+				<li><a href="" name="tab3"><i class="fa fa-calendar-check"></i>Appointments</a></li>
+				<li><a href="" name="tab4"><i class="fa fa-calendar-check"></i>New Appointment</a></li>
+				<li><a href="" name="tab5"><i class="fa fa-calendar-check"></i>Logout</a></li>
+			</ul>
+		</div>
+
+		<div class="main">
+			<div id="tab1" class="div">
+				<h2 class="header">User Dashboard</h2>
+				<div class="container">
+					<div class="row">
+					<div class="col-md-3">
+					  <div class="card-counter primary">
+						<i class="fa fa-code-fork"></i>
+						<span class="count-numbers">12</span>
+						<span class="count-name">Flowz</span>
+					  </div>
+					</div>
+
+					<div class="col-md-3">
+					  <div class="card-counter danger">
+						<i class="fa fa-ticket"></i>
+						<span class="count-numbers">599</span>
+						<span class="count-name">Instances</span>
+					  </div>
+					</div>
+
+					<div class="col-md-3">
+					  <div class="card-counter success">
+						<i class="fa fa-database"></i>
+						<span class="count-numbers">6875</span>
+						<span class="count-name">Data</span>
+					  </div>
+					</div>
+
+					<div class="col-md-3">
+					  <div class="card-counter info">
+						<i class="fa fa-users"></i>
+						<span class="count-numbers">35</span>
+						<span class="count-name">Users</span>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+			<div id="tab2" class="div"><h2 class="header">Profile</h2></div>
+			<div id="tab3" class="div">
+				<h2 class="header">Appointments</h2>
+				<table id="example" class="display" style="width:100%">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Position</th>
+							<th>Office</th>
+							<th>Age</th>
+							<th>Start date</th>
+							<th>Salary</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Tiger Nixon</td>
+							<td>System Architect</td>
+							<td>Edinburgh</td>
+							<td>61</td>
+							<td>2011-04-25</td>
+							<td>$320,800</td>
+						</tr>
+						<tr>
+							<td>Garrett Winters</td>
+							<td>Accountant</td>
+							<td>Tokyo</td>
+							<td>63</td>
+							<td>2011-07-25</td>
+							<td>$170,750</td>
+						</tr>
+						<tr>
+							<td>Ashton Cox</td>
+							<td>Junior Technical Author</td>
+							<td>San Francisco</td>
+							<td>66</td>
+							<td>2009-01-12</td>
+							<td>$86,000</td>
+						</tr>
+						<tr>
+							<td>Cedric Kelly</td>
+							<td>Senior Javascript Developer</td>
+							<td>Edinburgh</td>
+							<td>22</td>
+							<td>2012-03-29</td>
+							<td>$433,060</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th>Name</th>
+							<th>Position</th>
+							<th>Office</th>
+							<th>Age</th>
+							<th>Start date</th>
+							<th>Salary</th>
+						</tr>
+					</tfoot>
+				</table>
+	
+			</div>
+			<div id="tab4" class="div"><h2 class="header">New Appointment</h2></div>
+			<div id="tab5" class="div"><h2 class="header">Logout</h2></div>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+	jQuery(document).ready(function () {
+		jQuery('#example').DataTable({
+			pagingType: 'full_numbers',
+		});
+	});
+	</script>
+</body>
+</html>

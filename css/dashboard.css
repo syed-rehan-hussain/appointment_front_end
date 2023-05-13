@@ -1,0 +1,292 @@
+body {
+	background-color: #f1f1f1;
+	padding: 0;
+	margin: 0;
+	font-size: 14px;
+	font-family: "Open Sans",sans-serif;
+}
+
+.admin-panel {
+	width: 100%;
+  /* max-width:900px; */
+	/* margin: 50px auto; */
+  overflow: hidden;
+  background-color:#fff;
+  position:relative;
+}
+
+.slidebar {
+	/* width:20%; */
+	float: left;
+	/* background-color: #111; */
+	background-color: #0e446d;
+}
+.slidebar ul {
+  position:relative;
+  height:100%;
+}
+
+.slidebar a{
+  /* color: #bbb; */
+  color: #ffffff;
+  text-decoration:none;
+}
+.slidebar li{
+  text-align:left;
+  padding: 0x 0px;
+}
+
+ul {
+	padding: 0;
+	margin:0;
+}
+li {
+	list-style-type: none;
+	margin: 0;
+	position: relative;
+  text-align:center;
+  /* color:#B3B3B3; */
+  color: #344767;
+}
+.slidebar i {
+  /* display:block; */
+  text-align:center;
+  color: #ffffff;
+  /* color:#B3B3B3; */
+  float: left;
+  font-size: 30px;
+  margin-right:15px;
+  /* margin-bottom: 8px; */
+}
+
+.slidebar ul a {
+  /* color:#B3B3B3; */
+  color: #ffffff;
+	text-decoration: none;
+	box-sizing:border-box;
+	display: block;
+	text-transform: capitalize;
+  padding: 25px;
+  font-size: 20px;
+}
+.slidebar li:hover a, li#active{
+	/* background-color: #313131; */
+	background-color: #0e345e;
+}
+.slidebar li:hover i, li#active i{
+	/* color: #17BCE8; */
+  color: #ffffff;
+}
+.slidebar li:focus i {
+	/* color: #17BCE8; */
+  color: #344767;
+}
+
+.main {
+	float: left;
+	width: 80%;
+	background-color: rgb(255,255,255);
+	position: relative;
+}
+
+.main h2 {
+	margin:1em 30px;
+	/* color:#17BCE8; */
+  color: #344767;
+	font-size: 20px;
+  font-weight:600;
+  border-bottom: 1px solid #bbb;
+  padding: 0px 0px 20px 0px;
+}
+.entry-title{
+  display: none !important;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  /*background-color: #0e446d !important;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 18px;
+  width: 95%;
+  font-size: 18px;
+  text-align: left;
+  border: none;
+  outline: none;*/
+  transition: 0.4s;
+  margin: 0 20px 10px 30px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #0f4f95 !important;
+  color: #ffffff !important;
+  
+}
+.active a{
+  color: #ffffff !important;
+}
+
+[type=button], [type=submit], button{
+  background-color: #0e446d !important;
+  color: #ffffff !important;
+}
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  padding: 20px 38px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+  color: #344767;
+}
+button:focus{
+  background-color: #0e446d !important;
+  color: #ffffff !important;
+}
+
+.dataTables_length{
+  display: inline;
+}
+
+.dataTables_filter{
+  display: inline;
+  float: right;
+}
+.evnnone{
+  pointer-events: none;
+}
+#rememberme{
+  display: inline;
+  width: 6%;
+}
+.login-remember label{
+  width: 80%;
+}
+.description, #basic-user-avatar-erase{
+  display: none;
+}
+#basic-user-avatar-form *:nth-child(2){
+  display: none;
+}
+#basic-local-avatar{
+  margin-top:20px;
+}
+#adduser .form-table,#adduser h2{
+  display: none;
+}
+.disabled{
+  background-color: #dddddd !important;
+  pointer-events: none;
+}
+table tbody tr:hover>td, table tbody tr:hover>th{
+  background-color: none !important;
+}
+#bookingstart::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.delbtn{
+  border: 0px !important;
+  padding:.32rem .5rem !important;
+  background-color: #16aaff !important;
+  color:white !important;
+  font-size: .8rem !important;
+}
+
+/* .bg-c-blue {
+  background: linear-gradient(45deg,#4099ff,#73b4ff) !important;
+} */
+/* 
+.bg-c-green {
+  background: linear-gradient(45deg,#2ed8b6,#59e0c5) !important;
+}
+
+.bg-c-yellow {
+  background: linear-gradient(45deg,#FFB64D,#ffcb80) !important;
+}*/
+
+.dataTables_wrapper{
+  margin:0 0 0 30px;
+} 
+
+.comments-area a, .page-content a{
+  /* background: aliceblue; */
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none !important;
+  color:#344767;
+  /* margin-top: 10px !important; */
+} 
+
+.dataTables_paginate{
+  /* margin-top: 10px; */
+  float: right !important;
+}
+/* #basic-user-avatar-form input[name="manage_avatar_submit"] {
+  visibility: hidden;
+  position: relative;
+} */
+input[name="manage_avatar_submit"]:before {
+  content:"Update"; 
+  visibility: visible;
+  display: block;
+  position: absolute;
+  background-color: red;
+  padding: 5px;
+  top: 2px;
+} 
+
+.form-url, .form-password, .form-email{
+  display: none !important;
+}
+
+.modal-header{
+  display: block !important;
+}
+.modal-header .close{
+  margin: 0 0 -1rem auto !important;
+}
+
+[type=button], [type=submit], button{
+  border: none !important;
+}
+
+select{
+  width: auto !important;
+  display: inline-block !important;
+}
+
+.dataTables_info{
+  display: inline !important;
+  float:left !important;
+}
+
+#site-header, #site-footer{
+  display: none !important;
+}
+#regForm, .elementor-element-591c4c2{
+  background-color: #0e446d !important;
+}
+#regForm label, #regForm p, #regForm h3{
+  color: #ffffff !important;
+}
+.tablenav{
+  display: none !important;
+}
+.error{
+  color:red !important;
+  margin-bottom: 0 !important;
+}
+.login-username, .login-password, .login-remember{
+  color: white !important;
+}
+.hrsleft{
+	padding-left:4em;
+	display:inline-block;
+}
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}

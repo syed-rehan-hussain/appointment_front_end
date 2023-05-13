@@ -1,0 +1,198 @@
+jQuery(document).ready(function(){
+// Update appoinment start
+
+	var server_url = 'http://127.0.0.1:3001/' //Server or domain url
+	var token_type = 'Bearer';
+	var access_token = localStorage.getItem("access_token");
+	
+
+
+/*------------ WEEKDAYS START ------------*/
+	
+	jQuery.ajax({
+		type: "GET",	//get all weekdays hrs
+		url : server_url + 'api/weekdays/643d7862a131a370421c39af',
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+		},
+		success: function(data){
+			for(var i=0; i < days.length; i++){
+				for(var l = 0 ; l < data['data'].length; l++){
+							
+					if(data['data'][l]['dayindex'] == i+1){
+						var array = data['data'][l]['time_arr'].split(",").map(Number);
+							
+						for(var j=0; j < 12; j++){
+							for(var k =0; k <array.length; k++){
+								if(array[k] == hours_AM[j]){
+									document.getElementById(days[i]+'Check'+hours_AM[j]).checked = true;
+								}
+							}
+						}
+						
+						for(var j=0; j < 12; j++){
+							for(var k =0; k <array.length; k++){
+								if(array[k] == hours_PM[j]){
+									document.getElementById(days[i]+'Check'+hours_PM[j]).checked = true;
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		error: function(xhr, status, error){
+			//Handle failure here
+			console.log(error);
+
+		}
+	});
+
+/*------------ WEEKDAYS END ------------*/
+
+
+	
+/*------------ DAYS OFF START ------------*/
+	
+	jQuery.ajax({
+		type: "GET", //get all daysoff date
+		url : server_url + 'api/daysoff/',
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+		},
+		success: function(data){
+			for(var i=0; i< data['data'].length; i++){
+				var date_time = data['data'][i]['date']
+				var dayoff = new Date(date_time);
+				
+				var str_id = data['data'][i]['_id'];
+				var dayoff_date = dayoff.toLocaleString('en-us',{month:'short', year:'numeric', day:'numeric'})
+				document.getElementById('daysoff_area').innerHTML += '<tr id="'+data['data'][i]['_id']+'">\
+							<td style="border:1px solid #0e446d; ">'+dayoff_date+'</td>\
+							<td style="border:1px solid #0e446d; width: 20px;"><button onclick="dayoff_delete(\''+str_id.toString()+'\')" style="margin: 5px;" class="btn">Delete</button></td>\
+						</tr>';
+			}
+		},
+		error: function(xhr, status, error){
+		}
+	});
+	
+	
+	jQuery("#dayoff_submit").click(function(){
+		jQuery.ajax({
+			type: "POST",  //post daysoff date
+			url : server_url + 'api/daysoff/',
+			dataType: "JSON",
+			data: JSON.stringify({
+						"doctorId": "643d7862a131a370421c39af",
+						"date": document.getElementById('dayoff_date').value
+					}),
+			contentType: "application/json",
+			success: function(data){
+				var str_id = data['data']['_id'];
+				var dayoff = new Date(data['data']['date']);
+				var dayoff_date = dayoff.toLocaleString('en-us',{month:'short', year:'numeric', day:'numeric'})
+				document.getElementById('daysoff_area').innerHTML += '<tr id="'+data['data']['_id']+'">\
+							<td style="border:1px solid #0e446d; ">'+dayoff_date+'</td>\
+							<td style="border:1px solid #0e446d; width: 20px;"><button onclick="dayoff_delete(\''+str_id.toString()+'\')" style="margin: 5px;" class="btn">Delete</button></td>\
+						</tr>';
+				document.getElementById('msg').innerHTML = 'Added successfully!';
+				setTimeout(function(){ document.getElementById('msg').innerHTML = "" }, 4000);
+			}
+		});
+	});
+	
+	
+/*------------ DAYS OFF END ------------*/
+
+	
+/*------------ APPOINTMENT START ------------*/
+	function callApi2(serviceId,clientId,client_name, service_name, service_price, appoint_date,time,status) {
+		/*	jQuery.ajax({
+						type: "GET", //get Doctor Name
+						url : server_url + 'api/users/'+data['data'][i]['doctorId'],
+						async: true,
+						headers: {
+							'Access-Control-Allow-Origin': '*',
+						},
+						success: function(doctor){
+							doctor_name = doctor['data'];
+						}
+					});*/
+		
+		jQuery.ajax({
+			type: "GET", //get Client Name
+			url : server_url + 'api/users/'+clientId,
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+			},
+			success: function(client){
+				client_name = client['data'];
+				console.log(time);
+				//get Service Name
+				jQuery.ajax({
+					type: "GET", //get Service Name
+					url : server_url + 'api/services/'+serviceId,
+					headers: {
+						'Access-Control-Allow-Origin': '*',
+					},
+					success: function(service){
+						service_name = service['data']['name'];
+						service_price = service['data']['price'];
+						table = jQuery('#example').DataTable();    
+						table.row.add([ client_name, service_name, service_price, appoint_date,time,status ]);
+						table.draw();
+						//document.getElementById('appointment_table').innerHTML += '<tr class="'+oddeven+'"><td class="sorting_1">'+client_name+'</td><td>'+service_name+'</td>\
+				//<td>'+service_price+'</td><td>'+appoint_date+'</td><td>'+time+'</td><td>'+status+'</td></tr>';
+			
+						
+					}
+				});
+				
+			}
+		});
+	}
+
+	
+	jQuery.ajax({
+		type: "GET", //get all daysoff date
+		url : server_url + 'api/appointments/643d7862a131a370421c39af',
+		
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+		},
+		success: function(dataresult){
+			var doctor_name = '';
+			var client_name = '';
+			var service_name = '';
+			var service_price = '';
+			var data = dataresult;
+			console.log(data);
+			//jQuery(document).ready(function () {
+		
+				document.getElementById('appointment_table').innerHTML = '';
+				for(var i=0; i< data['data'].length; i++){
+					var date_time = data['data'][i]['date'];
+					var app_date = new Date(date_time);
+					var appoint_date = app_date.toLocaleString('en-us',{month:'short', year:'numeric', day:'numeric'});
+					var time = data['data'][i]['time'];
+					var status = data['data'][i]['status'];
+					var serviceId = data['data'][i]['serviceId'];
+					var clientId = data['data'][i]['clientId'];
+					
+					callApi2(serviceId, clientId, client_name, service_name, service_price, appoint_date,time,status);
+				}
+				jQuery('#example').DataTable({
+					pagingType: 'full_numbers',
+				});
+				
+			//});
+		},
+		error: function(xhr, status, error){
+		}
+	});
+	
+/*------------ APPOINTMENT END ------------*/
+	
+	
+});

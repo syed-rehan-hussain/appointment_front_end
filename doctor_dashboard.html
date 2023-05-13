@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title> Doctor Dashboard</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/dashboard.css">
+	<link rel="stylesheet" type="text/css" href="css/dashboardpack.css">
+	<link rel="stylesheet" type="text/css" href="css/card.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
+	<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="js/userdashboard.js"></script>
+	<script src="js/ajax.js"></script>
+
+</head>
+<body >
+	<div class="admin-panel">
+				
+		<div class="slidebar" style="">
+			
+			<ul>
+				<p style="margin:20px 0; text-align:center;"><a href="#profilepic" name="tab7">
+					<img src="img/logo.jpg" width="150px" height="150px" />
+				</a><p>
+				<li><a href="" name="tab1"><i class="fa fa-home"></i>General</a></li>
+				<li><a href="#profile" name="tab2"><i class="fa fa-user"></i>Profile</a></li>
+				<li><a href="" name="tab3"><i class="fa fa-calendar-check"></i>Appointments</a></li>
+				<li><a href="" name="tab4"><i class="fa fa-calendar-check"></i>Working Hours</a></li>
+				<li><a href="" name="tab6"><i class="fa fa-calendar-check"></i>DaysOff</a></li>
+				<li><a href="" name="tab5"><i class="fa fa-calendar-check"></i>Logout</a></li>
+			</ul>
+		</div>
+
+		<div class="main">
+			<div id="tab1" class="div">
+				<h2 class="header">Doctor Dashboard</h2>
+					<div class="container">
+						<div class="row">
+						<div class="col-md-3">
+						  <div class="card-counter primary">
+							<i class="fa fa-code-fork"></i>
+							<span class="count-numbers">12</span>
+							<span class="count-name">Flowz</span>
+						  </div>
+						</div>
+
+						<div class="col-md-3">
+						  <div class="card-counter danger">
+							<i class="fa fa-ticket"></i>
+							<span class="count-numbers">599</span>
+							<span class="count-name">Instances</span>
+						  </div>
+						</div>
+
+						<div class="col-md-3">
+						  <div class="card-counter success">
+							<i class="fa fa-database"></i>
+							<span class="count-numbers">6875</span>
+							<span class="count-name">Data</span>
+						  </div>
+						</div>
+
+						<div class="col-md-3">
+						  <div class="card-counter info">
+							<i class="fa fa-users"></i>
+							<span class="count-numbers">35</span>
+							<span class="count-name">Users</span>
+						  </div>
+						</div>
+					  </div>
+					</div>
+
+			</div>
+			<div id="tab2" class="div"><h2 class="header">Profile</h2></div>
+			<div id="tab3" class="div">
+				<h2 class="header">Appointments</h2>
+				<table id="example" class="display" style="width:100%">
+					<thead><tr><th>Patient</th><th>Service</th><th>Price</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+					<tbody id="appointment_table">
+							
+					</tbody>
+					<tfoot><tr><th>Patient</th><th>Service</th><th>Price</th><th>Date</th><th>Time</th><th>Status</th></tr></tfoot>
+				</table>
+			</div>
+			<div id="tab4" class="div">
+				<h2 class="header">Working Hours</h2>
+				<div class="accordion" id="accordionExample">
+				<script>
+					var days = ["Monday", "Tuesday", "Wednesday","Thursday", "Friday", "Saturday", "Sunday"];
+					var hours = ["01:00", "02:00", "03:00","04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00","11:00", "12:00"];
+					var hours_AM = ["1", "2", "3","4", "5", "6", "7", "8", "9", "10","11", "12"];
+					var hours_PM = ["13", "14", "15", "16", "17", "18", "19", "20","21", "22","23","24"];
+					
+					for(var i=0; i < days.length; i++){
+						var accor; 
+						accor ='<div class="accordion-item">\
+							<h3 class="accordion-header" id="accor'+days[i]+'">\
+							  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#'+days[i]+'" aria-expanded="false" aria-controls="'+days[i]+'">\
+								'+days[i]+'\
+							  </button>\
+							</h3>\
+							<div id="'+days[i]+'" class="accordion-collapse collapse" aria-labelledby="accor'+days[i]+'" data-bs-parent="#accordionExample">\
+							  <div class="accordion-body" style="padding-left: 0px; padding-right: 30px;" id="hrs'+days[i]+'">\
+								</div>\
+							</div>\
+						</div>';
+						document.getElementById('accordionExample').innerHTML += accor;
+						for(var j=0; j < 12; j++){
+							var hrs;
+							hrs = '<div style="" class="hrsleft">\
+									  <input class="form-check-input" type="checkbox" value="" id="'+days[i]+'Check'+hours_AM[j]+'">\
+									  <label class="form-check-label prevent-select" for="'+days[i]+'Check'+hours_AM[j]+'">\
+										'+hours[j]+' AM \
+									  </label>\
+									</div>';
+							document.getElementById('hrs'+days[i]).innerHTML += hrs;
+						}
+						for(var j=0; j < 12; j++){
+							var hrs;
+							
+							hrs = '<div style="" class="hrsleft">\
+									  <input class="form-check-input" type="checkbox" value="" id="'+days[i]+'Check'+hours_PM[j]+'">\
+									  <label class="form-check-label prevent-select" for="'+days[i]+'Check'+hours_PM[j]+'">\
+										'+hours[j]+' PM \
+									  </label>\
+									</div>';
+							document.getElementById('hrs'+days[i]).innerHTML += hrs;
+						}
+						document.getElementById('hrs'+days[i]).innerHTML += '<div><input type="button" value="Submit" style="margin-left:3em;" class="btn mt-4 btn-primary"/></div>';
+						
+					}
+				</script>
+					
+				 <!--<div class="accordion-item">
+					<h3 class="accordion-header" id="headingOne">
+					  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#Tuesday" aria-expanded="false" aria-controls="Tuesday">
+						Tuesday
+					  </button>
+					</h3>
+					<div id="Tuesday" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+					  <div class="accordion-body">
+							<div class="form-check">
+							  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+							  <label class="form-check-label" for="flexCheckDefault">
+								01:00
+							  </label>
+							</div>
+						</div>
+					</div>
+				  </div>-->
+				  
+				</div>
+			
+			</div>
+			<div id="tab6" class="div">
+				<h2 class="header">DaysOff</h2>
+				<div class="ml-4 ">
+				<form enctype="application/json">
+				<div class="form-group mb-4" style="width:300px;">
+					<label for="date">Dayoff:</label>
+					<input type="date" class="form-control" name="date" id="dayoff_date" autocomplete="off" />
+				</div>
+				
+				<input class="btn btn-primary" id="dayoff_submit" type="button" value="Submit"/><br/>
+				<span id="msg" style="color:red;"></span>
+				</form>
+				<table id="dayoff" class="display" style="margin-top:40px; width:30%">
+					<thead>
+						<tr >
+							<th style="border:1px solid #0e446d">Off Dates</th>
+							<th style="border:1px solid #0e446d"></th>
+						</tr>
+					</thead>
+					<tbody id="daysoff_area">
+						<!--<tr>
+							<td style="border:1px solid #0e446d; ">02-10-23</td>
+							<td style="border:1px solid #0e446d; width: 20px;"><button style="margin: 5px;" class="btn">Delete</button></td>
+						</tr>-->
+					</tbody>
+					<tfoot>
+						<tr>
+							<th style="border:1px solid #0e446d">Off Dates</th>
+							<th style="border:1px solid #0e446d"></th>
+						</tr>
+					</tfoot>
+				</table>
+				</div>
+				
+				
+				
+			</div>
+			<div id="tab5" class="div"><h2 class="header">Logout</h2></div>
+			</div>
+		</div>
+	</div>
+	<script>
+	var server_url = 'http://127.0.0.1:3001/' //Server or domain url
+	var token_type = 'Bearer';
+	var access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyVHlwZSI6IkFkbWluIiwiZW1haWwiOiJyZWhhbjAxNEBnbWFpbC5jb20iLCJpYXQiOjE2ODM1MjYyODUsImV4cCI6MTY4MzYxMjY4NX0.EsC04VR3C1gMSTWAbhLF3lGrE6kLqX3q-D-f_bSKxO0';
+
+	
+	
+	function dayoff_delete(id){
+		jQuery.ajax({
+			type: "DELETE",  //post daysoff date
+			url : server_url + 'api/daysoff/'+id,
+			dataType: "JSON",
+			contentType: "application/json",
+			success: function(data){
+				console.log(data);
+				
+				document.getElementById(id).innerHTML = '';
+				document.getElementById('msg').innerHTML = 'Delete successfully!';
+				setTimeout(function(){ document.getElementById('msg').innerHTML = "" }, 4000);
+			}
+		});
+	}
+	</script>
+</body>
+</html>
