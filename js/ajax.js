@@ -7,11 +7,95 @@ jQuery(document).ready(function(){
 	
 
 
+
+
+/*------------ USER START ------------*/
+
+	jQuery.ajax({
+		type: "GET",	//get all weekdays hrs
+		url : server_url + 'api/users/doctor/6464fb262d97d30e81659346',
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+		},
+		success: function(data){
+			document.getElementById('email').value = data['data']['email'];
+			document.getElementById('phone').value = data['data']['phoneNumber'];
+			if(data['data']['userAddress']){
+				document.getElementById('userAddress').value = data['data']['userAddress'];
+			}
+			if(data['data']['gender'] == "male"){
+				document.getElementById('male').checked = true;
+			}
+			if(data['data']['gender'] == "female"){
+				document.getElementById('female').checked = true;
+			}
+		}
+	});
+	
+	jQuery("#updateprofile").click(function(){
+		var male="unidentified";
+		if(document.getElementById('male').checked){
+			 male = "male";
+		}
+		if(document.getElementById('female').checked){
+			male = "female";
+		}
+		console.log();
+		jQuery.ajax({
+			type: "PUT",
+			url : server_url + 'api/users/doctor/6464fb262d97d30e81659346',
+			dataType: "JSON",
+			data: JSON.stringify({
+				"email": document.getElementById('email').value,
+				"phoneNumber": document.getElementById('phone').value,
+				"userAddress": document.getElementById('userAddress').value,
+				"gender": male,
+			}),
+			
+			contentType: "application/json",
+			success: function(data){
+				console.log(data);
+				document.getElementById('updmsg').innerHTML = 'Updated Successfully!';
+				setTimeout(function(){ document.getElementById('updmsg').innerHTML = "" }, 4000);
+			}
+		});
+	});
+
+
+/*------------ USER END ------------*/
+
+
 /*------------ WEEKDAYS START ------------*/
+
+	/*function weekhrs(day){
+		jQuery.ajax({
+			type: "POST",  //post daysoff date
+			url : server_url + 'api/weekdays/',
+			dataType: "JSON",
+			data: JSON.stringify({
+						"doctorId": "6464fb262d97d30e81659346",
+						"dayindex": '',
+						"time_arr": '',
+						"date": document.getElementById('dayoff_date').value
+					}),
+			contentType: "application/json",
+			success: function(data){
+				var str_id = data['data']['_id'];
+				var dayoff = new Date(data['data']['date']);
+				var dayoff_date = dayoff.toLocaleString('en-us',{month:'short', year:'numeric', day:'numeric'})
+				document.getElementById('daysoff_area').innerHTML += '<tr id="'+data['data']['_id']+'">\
+							<td style="border:1px solid #0e446d; ">'+dayoff_date+'</td>\
+							<td style="border:1px solid #0e446d; width: 20px;"><button onclick="dayoff_delete(\''+str_id.toString()+'\')" style="margin: 5px;" class="btn">Delete</button></td>\
+						</tr>';
+				document.getElementById('msg').innerHTML = 'Added successfully!';
+				setTimeout(function(){ document.getElementById('msg').innerHTML = "" }, 4000);
+			}
+		});
+	}*/
 	
 	jQuery.ajax({
 		type: "GET",	//get all weekdays hrs
-		url : server_url + 'api/weekdays/643d7862a131a370421c39af',
+		url : server_url + 'api/weekdays/6464fb262d97d30e81659346',
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
@@ -84,7 +168,7 @@ jQuery(document).ready(function(){
 			url : server_url + 'api/daysoff/',
 			dataType: "JSON",
 			data: JSON.stringify({
-						"doctorId": "643d7862a131a370421c39af",
+						"doctorId": "6464fb262d97d30e81659346",
 						"date": document.getElementById('dayoff_date').value
 					}),
 			contentType: "application/json",
@@ -156,7 +240,7 @@ jQuery(document).ready(function(){
 	
 	jQuery.ajax({
 		type: "GET", //get all daysoff date
-		url : server_url + 'api/appointments/643d7862a131a370421c39af',
+		url : server_url + 'api/appointments/6464fb262d97d30e81659346',
 		
 		headers: {
 			'Access-Control-Allow-Origin': '*',

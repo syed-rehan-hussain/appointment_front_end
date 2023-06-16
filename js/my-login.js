@@ -86,6 +86,7 @@ $(function() {
 						"name": document.getElementById('name').value,
 						"email": document.getElementById('email').value,
 						"password": document.getElementById('password').value,
+						"phoneNumber": document.getElementById('phone').value,
 						"userType": "doctor"
 					}),
 			contentType: "application/json",

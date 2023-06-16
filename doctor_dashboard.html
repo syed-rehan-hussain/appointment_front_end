@@ -78,7 +78,49 @@
 					</div>
 
 			</div>
-			<div id="tab2" class="div"><h2 class="header">Profile</h2></div>
+			
+			
+			<div id="tab2" class="div">
+				<h2 class="header">Profile</h2>
+					<form method="POST" style="width:40%; margin-left:30px;" >
+						<div >
+							<div class="form-group">
+								<label for="email">Email Address</label>
+								<input id="email" type="email" disabled class="form-control" name="email" required>
+							</div>
+							
+							<div class="form-group">
+								<label for="phone">Phone No</label>
+								<input id="phone" type="text" class="form-control" name="phone" required autofocus>
+							</div>
+							<div class="form-group">
+								<label for="userAddress">Address</label>
+								<input id="userAddress" type="textarea" class="form-control" name="userAddress" required data-eye>
+							</div>
+							
+							<div class="mb-4">
+								<label for="gender">Gender</label>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" id="male" name="gender" value="male" >
+								  <label class="form-check-label" for="male">Male</label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" id="female" name="gender" value="female" >
+								  <label class="form-check-label" for="female">Female</label>
+								</div>
+							</div>
+
+							<div class="form-group no-margin">
+								<button type="button" id="updateprofile" class="btn btn-primary btn-block">
+									Update
+								</button>
+							</div>
+							<span id="updmsg" style="color:red;"></span>
+						</div>
+					</form>
+			</div>
+			
+			
 			<div id="tab3" class="div">
 				<h2 class="header">Appointments</h2>
 				<table id="example" class="display" style="width:100%">
@@ -100,6 +142,7 @@
 					
 					for(var i=0; i < days.length; i++){
 						var accor; 
+						var dayname = days[i];
 						accor ='<div class="accordion-item">\
 							<h3 class="accordion-header" id="accor'+days[i]+'">\
 							  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#'+days[i]+'" aria-expanded="false" aria-controls="'+days[i]+'">\
@@ -115,7 +158,7 @@
 						for(var j=0; j < 12; j++){
 							var hrs;
 							hrs = '<div style="" class="hrsleft">\
-									  <input class="form-check-input" type="checkbox" value="" id="'+days[i]+'Check'+hours_AM[j]+'">\
+									  <input class="form-check-input" name="hours'+days[i]+'[]" type="checkbox" value="'+hours_AM[j]+'" id="'+days[i]+'Check'+hours_AM[j]+'">\
 									  <label class="form-check-label prevent-select" for="'+days[i]+'Check'+hours_AM[j]+'">\
 										'+hours[j]+' AM \
 									  </label>\
@@ -126,15 +169,62 @@
 							var hrs;
 							
 							hrs = '<div style="" class="hrsleft">\
-									  <input class="form-check-input" type="checkbox" value="" id="'+days[i]+'Check'+hours_PM[j]+'">\
+									  <input class="form-check-input" name="hours'+days[i]+'[]" type="checkbox" value="'+hours_PM[j]+'" id="'+days[i]+'Check'+hours_PM[j]+'">\
 									  <label class="form-check-label prevent-select" for="'+days[i]+'Check'+hours_PM[j]+'">\
 										'+hours[j]+' PM \
 									  </label>\
 									</div>';
 							document.getElementById('hrs'+days[i]).innerHTML += hrs;
 						}
-						document.getElementById('hrs'+days[i]).innerHTML += '<div><input type="button" value="Submit" style="margin-left:3em;" class="btn mt-4 btn-primary"/></div>';
+						document.getElementById('hrs'+days[i]).innerHTML += '<div><input onclick="weekday(\''+dayname+'\')" type="button" value="Submit" style="margin-left:3em;" class="btn mt-4 btn-primary"/></div>';
 						
+					}
+					
+					function weekday(day){
+					
+						var text = document.getElementById("text");
+						hours = document.getElementsByName('hours'+day+'[]');
+						
+							//console.log(hours);
+						var checked_hrs = [];
+						for(var i =0; i < 24; i++){
+							if (hours[i].checked == true){
+								checked_hrs[i]= hours[i].value;
+								
+							 }
+						}
+						
+							
+						jQuery.ajax({
+							type: "POST",  //post daysoff date
+							url : server_url + 'api/weekdays/',
+							dataType: "JSON",
+							data: JSON.stringify({
+										"doctorId": "6464fb262d97d30e81659346",
+										"dayindex": days.indexOf(day)+1,
+										"time_arr": checked_hrs
+									}),
+							contentType: "application/json",
+							success: function(data){
+							console.log(data);
+								/*var str_id = data['data']['_id'];
+								var dayoff = new Date(data['data']['date']);
+								var dayoff_date = dayoff.toLocaleString('en-us',{month:'short', year:'numeric', day:'numeric'})
+								document.getElementById('daysoff_area').innerHTML += '<tr id="'+data['data']['_id']+'">\
+											<td style="border:1px solid #0e446d; ">'+dayoff_date+'</td>\
+											<td style="border:1px solid #0e446d; width: 20px;"><button onclick="dayoff_delete(\''+str_id.toString()+'\')" style="margin: 5px;" class="btn">Delete</button></td>\
+										</tr>';
+								document.getElementById('msg').innerHTML = 'Added successfully!';
+								setTimeout(function(){ document.getElementById('msg').innerHTML = "" }, 4000);*/
+							}
+						});
+						/*var checked_hrs = '';
+						for(var i =0; i < 24; i++){
+							if (checkBox[i].checked == true){
+								checked_hrs[i] += checkBox[i].value;
+							 }
+							console.log(checked_hrs);
+						}*/
 					}
 				</script>
 					
