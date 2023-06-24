@@ -9,7 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="css/dashboardpack.css">
 	<link rel="stylesheet" type="text/css" href="css/card.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
+	<!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">-->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -26,56 +27,42 @@
 		<div class="slidebar" style="">
 			
 			<ul>
-				<p style="margin:20px 0; text-align:center;"><a href="#profilepic" name="tab7">
+				<!--<p style="margin:20px 0; text-align:center;"><a href="#profilepic" name="tab7">
 					<img src="img/logo.jpg" width="150px" height="150px" />
-				</a><p>
+				</a><p>--->
 				<li><a href="" name="tab1"><i class="fa fa-home"></i>General</a></li>
 				<li><a href="#profile" name="tab2"><i class="fa fa-user"></i>Profile</a></li>
 				<li><a href="" name="tab3"><i class="fa fa-calendar-check"></i>Appointments</a></li>
 				<li><a href="" name="tab4"><i class="fa fa-calendar-check"></i>Working Hours</a></li>
 				<li><a href="" name="tab6"><i class="fa fa-calendar-check"></i>DaysOff</a></li>
-				<li><a href="" name="tab5"><i class="fa fa-calendar-check"></i>Logout</a></li>
+				<li onclick="logout()"><a href="" name="tab5"><i class="fa fa-calendar-check"></i>Logout</a></li>
 			</ul>
 		</div>
 
 		<div class="main">
 			<div id="tab1" class="div">
 				<h2 class="header">Doctor Dashboard</h2>
-					<div class="container">
-						<div class="row">
-						<div class="col-md-3">
-						  <div class="card-counter primary">
-							<i class="fa fa-code-fork"></i>
-							<span class="count-numbers">12</span>
-							<span class="count-name">Flowz</span>
-						  </div>
-						</div>
-
-						<div class="col-md-3">
-						  <div class="card-counter danger">
-							<i class="fa fa-ticket"></i>
-							<span class="count-numbers">599</span>
-							<span class="count-name">Instances</span>
-						  </div>
-						</div>
-
-						<div class="col-md-3">
-						  <div class="card-counter success">
-							<i class="fa fa-database"></i>
-							<span class="count-numbers">6875</span>
-							<span class="count-name">Data</span>
-						  </div>
-						</div>
-
-						<div class="col-md-3">
-						  <div class="card-counter info">
-							<i class="fa fa-users"></i>
-							<span class="count-numbers">35</span>
-							<span class="count-name">Users</span>
-						  </div>
-						</div>
+				<div class="container">
+					<div class="row">
+					<div class="col-md-3">
+					  <div class="card-counter primary">
+						<i class="fa fa-code-fork"></i>
+						<span class="count-numbers" id="tsession">12</span>
+						<span class="count-name">Total Sessions</span>
 					  </div>
 					</div>
+
+					<div class="col-md-3">
+					  <div class="card-counter danger">
+						<i class="fa fa-ticket"></i>
+						<span class="count-numbers" id="tearning">599</span>
+						<span class="count-name">Total Earning</span>
+					  </div>
+					</div>
+
+					
+				  </div>
+				</div>
 
 			</div>
 			
@@ -126,7 +113,7 @@
 				<table id="example" class="display" style="width:100%">
 					<thead><tr><th>Patient</th><th>Service</th><th>Price</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
 					<tbody id="appointment_table">
-							
+						
 					</tbody>
 					<tfoot><tr><th>Patient</th><th>Service</th><th>Price</th><th>Date</th><th>Time</th><th>Status</th></tr></tfoot>
 				</table>
@@ -135,6 +122,17 @@
 				<h2 class="header">Working Hours</h2>
 				<div class="accordion" id="accordionExample">
 				<script>
+					var token = localStorage.getItem("access_token");
+					var data = tokenjwt(token);
+					
+					function tokenjwt(tkn){
+						try {
+							return JSON.parse(atob(tkn.split('.')[1]));
+						} catch (e) {
+							return null;
+						}
+					}
+				
 					var days = ["Monday", "Tuesday", "Wednesday","Thursday", "Friday", "Saturday", "Sunday"];
 					var hours = ["01:00", "02:00", "03:00","04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00","11:00", "12:00"];
 					var hours_AM = ["1", "2", "3","4", "5", "6", "7", "8", "9", "10","11", "12"];
@@ -176,7 +174,7 @@
 									</div>';
 							document.getElementById('hrs'+days[i]).innerHTML += hrs;
 						}
-						document.getElementById('hrs'+days[i]).innerHTML += '<div><input onclick="weekday(\''+dayname+'\')" type="button" value="Submit" style="margin-left:3em;" class="btn mt-4 btn-primary"/></div>';
+						document.getElementById('hrs'+days[i]).innerHTML += '<div><input onclick="weekday(\''+dayname+'\')" type="button" value="Submit" style="margin-left:2em;" class="btn mt-4 mb-2 btn-primary"/><br/><span style="margin-left:1.5em; color:red; font-size:18px;" id="msg'+days[i]+'"></span></div>';
 						
 					}
 					
@@ -185,46 +183,43 @@
 						var text = document.getElementById("text");
 						hours = document.getElementsByName('hours'+day+'[]');
 						
-							//console.log(hours);
-						var checked_hrs = [];
+							
+						var checked_hrs = "";
+						var j = 0;
 						for(var i =0; i < 24; i++){
 							if (hours[i].checked == true){
-								checked_hrs[i]= hours[i].value;
-								
-							 }
+								if(j == 0){
+									checked_hrs += hours[i].value;
+									j++;
+								}
+								else{
+									checked_hrs += "," + hours[i].value;
+									j++;
+								}
+							}
 						}
 						
 							
 						jQuery.ajax({
-							type: "POST",  //post daysoff date
+							type: "POST",  //post weekday hrs
 							url : server_url + 'api/weekdays/',
 							dataType: "JSON",
 							data: JSON.stringify({
-										"doctorId": "6464fb262d97d30e81659346",
+										"doctorId": data.id,
 										"dayindex": days.indexOf(day)+1,
 										"time_arr": checked_hrs
 									}),
 							contentType: "application/json",
 							success: function(data){
-							console.log(data);
-								/*var str_id = data['data']['_id'];
-								var dayoff = new Date(data['data']['date']);
-								var dayoff_date = dayoff.toLocaleString('en-us',{month:'short', year:'numeric', day:'numeric'})
-								document.getElementById('daysoff_area').innerHTML += '<tr id="'+data['data']['_id']+'">\
-											<td style="border:1px solid #0e446d; ">'+dayoff_date+'</td>\
-											<td style="border:1px solid #0e446d; width: 20px;"><button onclick="dayoff_delete(\''+str_id.toString()+'\')" style="margin: 5px;" class="btn">Delete</button></td>\
-										</tr>';
-								document.getElementById('msg').innerHTML = 'Added successfully!';
-								setTimeout(function(){ document.getElementById('msg').innerHTML = "" }, 4000);*/
+								document.getElementById('msg'+day).innerHTML = 'Success';
+								setTimeout(function(){ document.getElementById('msg'+day).innerHTML = "" }, 4000);
 							}
 						});
-						/*var checked_hrs = '';
-						for(var i =0; i < 24; i++){
-							if (checkBox[i].checked == true){
-								checked_hrs[i] += checkBox[i].value;
-							 }
-							console.log(checked_hrs);
-						}*/
+					}
+					
+					function logout(){
+						localStorage.removeItem("access_token");
+						window.location.href = "http://localhost/final_project/index.html";
 					}
 				</script>
 					

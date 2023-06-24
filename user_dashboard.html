@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/dashboardpack.css">
 	<link rel="stylesheet" type="text/css" href="css/card.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -17,22 +17,23 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/userdashboard.js"></script>
+	<script src="js/userajax.js"></script>
 
 </head>
 <body >
 	<div class="admin-panel">
 				
-		<div class="slidebar" style="">
+		<div class="slidebar" style="height:100vh;">
 			
 			<ul>
-				<p style="margin:20px 0; text-align:center;"><a href="#profilepic" name="tab7">
+				<!--<p style="margin:20px 0; text-align:center;"><a href="#profilepic" name="tab7">
 					<img src="img/logo.jpg" width="150px" height="150px" />
-				</a><p>
+				</a><p>--->
 				<li><a href="" name="tab1"><i class="fa fa-home"></i>General</a></li>
 				<li><a href="#profile" name="tab2"><i class="fa fa-user"></i>Profile</a></li>
 				<li><a href="" name="tab3"><i class="fa fa-calendar-check"></i>Appointments</a></li>
-				<li><a href="" name="tab4"><i class="fa fa-calendar-check"></i>New Appointment</a></li>
-				<li><a href="" name="tab5"><i class="fa fa-calendar-check"></i>Logout</a></li>
+				<li onclick="redirect()"><a href="" name="tab4"><i class="fa fa-calendar-check"></i>New Appointment</a></li>
+				<li><a href="" name="tab5" onclick="logout()"><i class="fa fa-calendar-check"></i>Logout</a></li>
 			</ul>
 		</div>
 
@@ -44,97 +45,73 @@
 					<div class="col-md-3">
 					  <div class="card-counter primary">
 						<i class="fa fa-code-fork"></i>
-						<span class="count-numbers">12</span>
-						<span class="count-name">Flowz</span>
+						<span class="count-numbers" id="tsession">12</span>
+						<span class="count-name">Total Sessions</span>
 					  </div>
 					</div>
 
 					<div class="col-md-3">
 					  <div class="card-counter danger">
 						<i class="fa fa-ticket"></i>
-						<span class="count-numbers">599</span>
-						<span class="count-name">Instances</span>
+						<span class="count-numbers" id="tearning">599</span>
+						<span class="count-name">Total Spend</span>
 					  </div>
 					</div>
 
-					<div class="col-md-3">
-					  <div class="card-counter success">
-						<i class="fa fa-database"></i>
-						<span class="count-numbers">6875</span>
-						<span class="count-name">Data</span>
-					  </div>
-					</div>
-
-					<div class="col-md-3">
-					  <div class="card-counter info">
-						<i class="fa fa-users"></i>
-						<span class="count-numbers">35</span>
-						<span class="count-name">Users</span>
-					  </div>
-					</div>
+					
 				  </div>
 				</div>
 			</div>
-			<div id="tab2" class="div"><h2 class="header">Profile</h2></div>
+			
+			<div id="tab2" class="div">
+				<h2 class="header">Profile</h2>
+					<form method="POST" style="width:40%; margin-left:30px;" >
+						<div >
+							<div class="form-group">
+								<label for="email">Email Address</label>
+								<input id="email" type="email" disabled class="form-control" name="email" required>
+							</div>
+							
+							<div class="form-group">
+								<label for="phone">Phone No</label>
+								<input id="phone" type="text" class="form-control" name="phone" required autofocus>
+							</div>
+							<div class="form-group">
+								<label for="userAddress">Address</label>
+								<input id="userAddress" type="textarea" class="form-control" name="userAddress" required data-eye>
+							</div>
+							
+							<div class="mb-4">
+								<label for="gender">Gender</label>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" id="male" name="gender" value="male" >
+								  <label class="form-check-label" for="male">Male</label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" id="female" name="gender" value="female" >
+								  <label class="form-check-label" for="female">Female</label>
+								</div>
+							</div>
+
+							<div class="form-group no-margin">
+								<button type="button" id="updateprofile" class="btn btn-primary btn-block">
+									Update
+								</button>
+							</div>
+							<span id="updmsg" style="color:red;"></span>
+						</div>
+					</form>
+			</div>
+			
 			<div id="tab3" class="div">
 				<h2 class="header">Appointments</h2>
-				<table id="example" class="display" style="width:100%">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Position</th>
-							<th>Office</th>
-							<th>Age</th>
-							<th>Start date</th>
-							<th>Salary</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
-							<td>2011-04-25</td>
-							<td>$320,800</td>
-						</tr>
-						<tr>
-							<td>Garrett Winters</td>
-							<td>Accountant</td>
-							<td>Tokyo</td>
-							<td>63</td>
-							<td>2011-07-25</td>
-							<td>$170,750</td>
-						</tr>
-						<tr>
-							<td>Ashton Cox</td>
-							<td>Junior Technical Author</td>
-							<td>San Francisco</td>
-							<td>66</td>
-							<td>2009-01-12</td>
-							<td>$86,000</td>
-						</tr>
-						<tr>
-							<td>Cedric Kelly</td>
-							<td>Senior Javascript Developer</td>
-							<td>Edinburgh</td>
-							<td>22</td>
-							<td>2012-03-29</td>
-							<td>$433,060</td>
-						</tr>
+				<table id="example1" class="display" style="width:100%">
+					<thead><tr><th>Doctor</th><th>Service</th><th>Price</th><th>Date</th><th>Time</th><th>Status</th></tr></thead>
+					<tbody id="appointment_table">
+						
 					</tbody>
-					<tfoot>
-						<tr>
-							<th>Name</th>
-							<th>Position</th>
-							<th>Office</th>
-							<th>Age</th>
-							<th>Start date</th>
-							<th>Salary</th>
-						</tr>
-					</tfoot>
+					<tfoot><tr><th>Doctor</th><th>Service</th><th>Price</th><th>Date</th><th>Time</th><th>Status</th></tr></tfoot>
 				</table>
-	
 			</div>
 			<div id="tab4" class="div"><h2 class="header">New Appointment</h2></div>
 			<div id="tab5" class="div"><h2 class="header">Logout</h2></div>
@@ -144,10 +121,18 @@
 	
 	<script>
 	jQuery(document).ready(function () {
-		jQuery('#example').DataTable({
+		jQuery('#example1').DataTable({
 			pagingType: 'full_numbers',
 		});
 	});
+	function logout(){
+		localStorage.removeItem("access_token");
+		window.location.href = "http://localhost/final_project/index.html";
+	}
+	
+	function redirect(){
+		window.location.href = "http://localhost/final_project/booking.html";
+	}
 	</script>
 </body>
 </html>

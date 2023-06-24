@@ -4,18 +4,26 @@
 	<meta charset="utf-8">
 
 	<title> Bootstrap 4 forget password page Snippet</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/booking.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!--//<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="js/booking.js"></script>
+	//<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	//<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	-->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+	<script src="js/booking.js"></script>
+	
+	
 </head>
 <body >
-<form id="" action="">
+<form id="regForm" method="POST">
   <!-- One "tab" for each step in the form: -->
   <div class="tab">
 	<h3 style="text-align:center;">Doctor Selection</h3>
@@ -69,52 +77,53 @@
   </div>
   
   
-  
-  <div class="tab">
-		<h3 style="text-align:center;">Your Information</h3>
-		<div class="row mb-1">
-			<div class="col">
-				<div class="form-group first mb-2">
-					<label for="firstname">First Name:</label>
-					<input type="text" class="form-control" required="" placeholder="Enter first name" id="firstname" name="txtfirstname" autocomplete="off">
+  <div  id="information" style="display:block;">
+	  <div class="tab">
+			<h3 style="text-align:center;">Your Information</h3>
+			<div class="row mb-1">
+				<div class="col">
+					<div class="form-group first mb-2">
+						<label for="firstname">First Name:</label>
+						<input type="text" class="form-control" required="" placeholder="Enter first name" id="firstname" name="txtfirstname" autocomplete="off">
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-group first mb-2">
+						<label for="lastname">Last Name:</label>
+						<input type="text" class="form-control" required="" placeholder="Enter last name" id="lastname" name="txtlastname" autocomplete="off">
+					</div>
 				</div>
 			</div>
-			<div class="col">
-				<div class="form-group first mb-2">
-					<label for="lastname">Last Name:</label>
-					<input type="text" class="form-control" required="" placeholder="Enter last name" id="lastname" name="txtlastname" autocomplete="off">
+			<div class="row mb-1">
+				<div class="col">
+					<div class="form-group first mb-2">
+						<label for="email">Email:</label>
+						<input type="Email" class="form-control" placeholder="Enter Email" id="email" name="txtEmail" autocomplete="off">
+						<div id="emailStatus"></div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-group mb-2">
+						<label for="phone">Phone:</label>
+						<input type="tel" class="form-control" placeholder="Enter Phone" id="phone" name="txtphone" autocomplete="off">
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row mb-1">
-			<div class="col">
-				<div class="form-group first mb-2">
-					<label for="email">Email:</label>
-					<input type="Email" class="form-control" placeholder="Enter Email" id="email" name="txtEmail" autocomplete="off">
-					<div id="emailStatus"></div>
+			
+			<div class="row mb-1">
+				<div class="col">
+					
+					<div class="form-group mb-2">
+						<label for="password">Password:</label>
+						<input type="password" class="form-control" required="" placeholder="Enter Password" id="password" name="txtPassword" autocomplete="off">
+					</div>
 				</div>
-			</div>
-			<div class="col">
-				<div class="form-group mb-2">
-					<label for="phone">Phone:</label>
-					<input type="tel" class="form-control" placeholder="Enter Phone" id="phone" name="txtphone" autocomplete="off">
-				</div>
-			</div>
-		</div>
-		
-		<div class="row mb-1">
-			<div class="col">
-				
-				<div class="form-group mb-2">
-					<label for="password">Password:</label>
-					<input type="password" class="form-control" required="" placeholder="Enter Password" id="password" name="txtPassword" autocomplete="off">
-				</div>
-			</div>
-			<div class="col">
-				<div class="form-group last mb-3">
-					<label for="confirm password">Confirm Password:</label>
-					<input type="password" class="form-control" required="" placeholder="Enter Confirm Password" id="confpassword" name="txtConfirmPassword" autocomplete="off">
-					<span id="message" style="color: red;">Not Matching</span>
+				<div class="col">
+					<div class="form-group last mb-3">
+						<label for="confirm password">Confirm Password:</label>
+						<input type="password" class="form-control" required="" placeholder="Enter Confirm Password" id="confpassword" name="txtConfirmPassword" autocomplete="off">
+						<span id="message" style="color: red;">Not Matching</span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -125,12 +134,13 @@
             <div class="col-75">
                 <div class="container">
                     <!-- <h5>Services</h5> -->
-                    <p>Therapist:<span id="showservice"></span> <span class="price" style="color:#ffffff"><b id="serviceprice">hasantahir</b></span></p>
-                    <p>Total Amount:<span class="price" style="color:#ffffff"><b id="totalprice" name="totalprice">1200</b></span></p>
+                    <p>Therapist:<span ></span> <span class="price" ><b id="showtherapist"></b></span></p>
+                    <p>Service:<span ></span> <span class="price" ><b id="showservice"></b></span></p>
                     
-                    <p>Date:<span class="price" style="color:#ffffff"><b id="appdate">2023-05-08</b></span></p>
+                    <p>Date:<span class="price" ><b id="appdate"></b></span></p>
                     
-                    <p>Time:<span class="price" style="color:#ffffff"><b id="apptime">10:00--11:00</b></span></p>
+                    <p>Time:<span class="price" ><b id="apptime"></b></span></p>
+                    <p>Total Amount:<span class="price"><b id="totalprice" name="totalprice"></b></span></p>
                     <input type="hidden" value="0" id="updbalance" name="updbalance" autocomplete="off">
                     <input type="hidden" value="1200" id="totalprice1" name="totalprice1" autocomplete="off">
                 </div>
@@ -163,7 +173,108 @@
 </form>
 
 <script>
+	var server_url = 'http://127.0.0.1:3001/' //Server or domain url
+	var token_type = 'Bearer';
+	var access_token = localStorage.getItem("access_token");
+	
+	var userdata = tokenjwt(access_token);
+	
+	function tokenjwt(tkn){
+		try {
+			return JSON.parse(atob(tkn.split('.')[1]));
+		} catch (e) {
+			return null;
+		}
+	}
+	
+	if(access_token){
+		//console.log("true"+access_token);
+		jQuery('#information').remove();
+	}
 
+//Submit Coding Start
+
+//jQuery( "form[name='regForm']").on( "submit", function(e) {
+       // e.preventDefault();
+function submitform(){
+/*------------ SIGNUP Start ------------*/
+		if(jQuery("#firstname").value && jQuery("#email").value){
+			jQuery.ajax({
+			type: "POST",  
+			url : server_url + 'api/users/signup',
+			dataType: "JSON",
+			data: JSON.stringify({
+						"name": document.getElementById('firstname').value + " " + document.getElementById('lastname').value,
+						"email": document.getElementById('email').value,
+						"password": document.getElementById('password').value,
+						"phoneNumber": document.getElementById('phone').value,
+						"userType": "client"
+					}),
+			contentType: "application/json",
+			success: function(data){
+					if(document.querySelector('input[name="isvirtual"]:checked').value == 'isvirtual'){
+						var bool = true;
+					}
+					else{
+						var bool = false;
+					}
+					jQuery.ajax({
+						type: "POST",  
+						url : server_url + 'api/appointments/',
+						dataType: "JSON",
+						data: JSON.stringify({
+									"doctorId": document.getElementById('therapistid').value,
+									"clientId": data['_id'],
+									"serviceId": document.getElementById('serviceId').value,
+									"date": document.getElementById('bookingstart').value,
+									"time": document.getElementById('app_time').value,
+									"isVirtual": bool,
+								}),
+						contentType: "application/json",
+						success: function(data1){
+							window.location.href = "http://localhost/final_project/index.html";
+						}
+					});
+				//window.location.href = "http://localhost/final_project/index.html";
+				
+				}
+			});
+		}else{
+			if(document.querySelector('input[name="isvirtual"]:checked').value == 'isvirtual'){
+				var bool = true;
+			}
+			else{
+				var bool = false;
+			}
+			jQuery.ajax({
+				type: "POST",  
+				url : server_url + 'api/appointments/',
+				dataType: "JSON",
+				data: JSON.stringify({
+							"doctorId": document.getElementById('therapistid').value,
+							"clientId": userdata.id,
+							"serviceId": document.getElementById('serviceId').value,
+							"date": document.getElementById('bookingstart').value,
+							"time": document.getElementById('app_time').value,
+							"isVirtual": bool,
+						}),
+				contentType: "application/json",
+				success: function(data1){
+					window.location.href = "http://localhost/final_project/user_dashboard.html";
+				}
+			});
+		}
+		
+
+/*------------ SIGNUP END ------------*/
+
+//});
+}
+//Submit Coding End
+	
+	
+	
+	
     jQuery('#password, #confpassword').on('keyup', function () {
         if (jQuery('#password').val() == jQuery('#confpassword').val()) {
             jQuery('#message').html('Matching').css('color', 'green');
@@ -205,7 +316,12 @@ function nextPrev(n) {
   // if you have reached the end of the form...
   if (currentTab >= x.length) {
     // ... the form gets submitted:
-    document.getElementById("regForm").submit();
+	
+	/*var btn = document.getElementById('nextBtn');
+	btn.removeAttribute('type');
+	btn.setAttribute('type', 'submit');*/
+	submitform();
+    //document.getElementById("regForm").submit();
     return false;
   }
   // Otherwise, display the correct tab:

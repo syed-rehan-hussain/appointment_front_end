@@ -75,3 +75,22 @@ button:hover {
 .step.finish {
   background-color: #04AA6D;
 }
+
+.datepicker table{
+	margin:10px !important; 
+}
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover{
+	background: azure !important;
+	padding: 10px !important;
+}
+
+.price{
+	float:right;
+}
+.tab p{
+	margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+    background: azure !important;
+    padding: 10px !important;
+    border: solid 1px #f6f6 !important;
+}

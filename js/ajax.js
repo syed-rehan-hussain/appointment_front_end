@@ -5,15 +5,28 @@ jQuery(document).ready(function(){
 	var token_type = 'Bearer';
 	var access_token = localStorage.getItem("access_token");
 	
+	var token = localStorage.getItem("access_token");
+	var data = tokenjwt(token);
+	
+	function tokenjwt(tkn){
+		try {
+			return JSON.parse(atob(tkn.split('.')[1]));
+		} catch (e) {
+			return null;
+		}
+	}
 
+	if(data.userType == "client"){
+		window.location.href = "http://localhost/final_project/user_dashboard.html";
+	}
 
 
 
 /*------------ USER START ------------*/
 
 	jQuery.ajax({
-		type: "GET",	//get all weekdays hrs
-		url : server_url + 'api/users/doctor/6464fb262d97d30e81659346',
+		type: "GET",	//get user profile
+		url : server_url + 'api/users/doctor/'+data.id,
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
@@ -43,7 +56,7 @@ jQuery(document).ready(function(){
 		console.log();
 		jQuery.ajax({
 			type: "PUT",
-			url : server_url + 'api/users/doctor/6464fb262d97d30e81659346',
+			url : server_url + 'api/users/doctor/'+data.id,
 			dataType: "JSON",
 			data: JSON.stringify({
 				"email": document.getElementById('email').value,
@@ -73,10 +86,10 @@ jQuery(document).ready(function(){
 			url : server_url + 'api/weekdays/',
 			dataType: "JSON",
 			data: JSON.stringify({
-						"doctorId": "6464fb262d97d30e81659346",
+						"doctorId": data.id,
 						"dayindex": '',
 						"time_arr": '',
-						"date": document.getElementById('dayoff_date').value
+						//"date": document.getElementById('dayoff_date').value
 					}),
 			contentType: "application/json",
 			success: function(data){
@@ -95,7 +108,7 @@ jQuery(document).ready(function(){
 	
 	jQuery.ajax({
 		type: "GET",	//get all weekdays hrs
-		url : server_url + 'api/weekdays/6464fb262d97d30e81659346',
+		url : server_url + 'api/weekdays/'+data.id,
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
@@ -140,7 +153,7 @@ jQuery(document).ready(function(){
 	
 	jQuery.ajax({
 		type: "GET", //get all daysoff date
-		url : server_url + 'api/daysoff/',
+		url : server_url + 'api/daysoff/'+data.id,
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
@@ -168,7 +181,7 @@ jQuery(document).ready(function(){
 			url : server_url + 'api/daysoff/',
 			dataType: "JSON",
 			data: JSON.stringify({
-						"doctorId": "6464fb262d97d30e81659346",
+						"doctorId": data.id,
 						"date": document.getElementById('dayoff_date').value
 					}),
 			contentType: "application/json",
@@ -191,18 +204,8 @@ jQuery(document).ready(function(){
 
 	
 /*------------ APPOINTMENT START ------------*/
+var earning = 0;
 	function callApi2(serviceId,clientId,client_name, service_name, service_price, appoint_date,time,status) {
-		/*	jQuery.ajax({
-						type: "GET", //get Doctor Name
-						url : server_url + 'api/users/'+data['data'][i]['doctorId'],
-						async: true,
-						headers: {
-							'Access-Control-Allow-Origin': '*',
-						},
-						success: function(doctor){
-							doctor_name = doctor['data'];
-						}
-					});*/
 		
 		jQuery.ajax({
 			type: "GET", //get Client Name
@@ -223,13 +226,29 @@ jQuery(document).ready(function(){
 					success: function(service){
 						service_name = service['data']['name'];
 						service_price = service['data']['price'];
-						table = jQuery('#example').DataTable();    
+						earning = earning + service_price;
+						
+						document.getElementById('tearning').innerHTML = earning;
+						table = jQuery('#example').DataTable(); 
+						var num = parseInt(time)+1;
+						if(Number(time) < 9){
+							time = "0"+time+":00 AM -- "+ num +":00 AM";
+						}else if(Number(time) > 9 && Number(time) < 13){
+							if(num == 12){
+								time = time+":00 AM -- "+ num +":00 PM";
+							}else{
+								time = time+":00 AM -- "+ num +":00 AM";
+							}
+						}else{
+							if(num == 25){
+								num = "0"+1;
+								time = time+":00 PM -- "+ num +":00 AM";
+							}else{
+								time = time+":00 PM -- "+ num +":00 PM";
+							}
+						}
 						table.row.add([ client_name, service_name, service_price, appoint_date,time,status ]);
 						table.draw();
-						//document.getElementById('appointment_table').innerHTML += '<tr class="'+oddeven+'"><td class="sorting_1">'+client_name+'</td><td>'+service_name+'</td>\
-				//<td>'+service_price+'</td><td>'+appoint_date+'</td><td>'+time+'</td><td>'+status+'</td></tr>';
-			
-						
 					}
 				});
 				
@@ -239,8 +258,8 @@ jQuery(document).ready(function(){
 
 	
 	jQuery.ajax({
-		type: "GET", //get all daysoff date
-		url : server_url + 'api/appointments/6464fb262d97d30e81659346',
+		type: "GET", //get all appointment
+		url : server_url + 'api/appointments/'+data.id,
 		
 		headers: {
 			'Access-Control-Allow-Origin': '*',
@@ -251,9 +270,10 @@ jQuery(document).ready(function(){
 			var service_name = '';
 			var service_price = '';
 			var data = dataresult;
-			console.log(data);
+			//console.log("len"+data['data'].length);
 			//jQuery(document).ready(function () {
 		
+				document.getElementById('tsession').innerHTML = data['data'].length;
 				document.getElementById('appointment_table').innerHTML = '';
 				for(var i=0; i< data['data'].length; i++){
 					var date_time = data['data'][i]['date'];

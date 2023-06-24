@@ -54,11 +54,11 @@ $(function() {
 				console.log(data['token']);
 				localStorage.setItem("access_token", data['token']);
 				if(data['userType'] == 'doctor'){
-					window.location.href = "http://localhost/final%20project/doctor_dashboard.html";
+					window.location.href = "http://localhost/final_project/doctor_dashboard.html";
 				}else if(data['userType'] == 'client'){
-					window.location.href = "http://localhost/final%20project/user_dashboard.html";
+					window.location.href = "http://localhost/final_project/user_dashboard.html";
 				}else if(data['userType'] == 'Admin'){
-					window.location.href = "http://localhost/final%20project/doctor_dashboard.html";
+					window.location.href = "http://localhost/final_project/doctor_dashboard.html";
 				}
 				/*var dayoff = new Date(data['data']['date']);
 				var dayoff_date = dayoff.toLocaleString('en-us',{month:'short', year:'numeric', day:'numeric'})
@@ -92,7 +92,7 @@ $(function() {
 			contentType: "application/json",
 			success: function(data){
 				console.log(data);
-				window.location.href = "http://localhost/final%20project/index.html";
+				window.location.href = "http://localhost/final_project/index.html";
 				/*var dayoff = new Date(data['data']['date']);
 				var dayoff_date = dayoff.toLocaleString('en-us',{month:'short', year:'numeric', day:'numeric'})
 				document.getElementById('daysoff_area').innerHTML += '<tr id="'+data['data']['_id']+'">\
