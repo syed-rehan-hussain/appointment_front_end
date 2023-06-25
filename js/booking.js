@@ -104,7 +104,6 @@ jQuery( "#therapistid").on( "change", function(e) {
 // Update time using date select in appoinment booking start
     jQuery( "#app_time").on( "change", function(e) {
         var z = document.getElementById('app_time').value;
-       // var y = parseInt(z, 10)+1;
 		if(z<9){
 			var y = "0"+(parseInt(z)+1);
 		}else{
@@ -113,15 +112,7 @@ jQuery( "#therapistid").on( "change", function(e) {
 				y = 1;
 			}
 		}
-       // if(y < 9){
             document.getElementById('apptime').innerHTML = z + ":00 ---- "+ y +":00";
-       // }
-        /*else if(y == 25 ){
-            document.getElementById('app_end_time').value = 1;
-        }
-        else{
-            document.getElementById('app_end_time').value = y;
-        }*/
     });
 
     
@@ -201,8 +192,6 @@ jQuery( "#therapistid").on( "change", function(e) {
 
 //Submit Coding Start
 
-//jQuery( "form[name='regForm']").on( "submit", function(e) {
-       // e.preventDefault();
 function submitform(){
 /*------------ SIGNUP Start ------------*/
 		

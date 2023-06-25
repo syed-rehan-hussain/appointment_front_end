@@ -16,7 +16,7 @@ jQuery(document).ready(function(){
 		}
 	}
 
-	console.log(data.userType);
+	//console.log(data.userType);
 	if(data.userType == "doctor"){
 		window.location.href = "http://localhost/final_project/doctor_dashboard.html";
 	}
@@ -110,7 +110,7 @@ var earning = 0;
 						table = jQuery('#example1').DataTable(); 
 						var num = parseInt(time)+1;
 						if(Number(time) < 9){
-							time = "0"+time+":00 AM -- "+ num +":00 AM";
+							time = time+":00 AM -- "+ "0"+ num +":00 AM";
 						}else if(Number(time) > 9 && Number(time) < 13){
 							if(num == 12){
 								time = time+":00 AM -- "+ num +":00 PM";

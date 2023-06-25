@@ -80,31 +80,6 @@ jQuery(document).ready(function(){
 
 /*------------ WEEKDAYS START ------------*/
 
-	/*function weekhrs(day){
-		jQuery.ajax({
-			type: "POST",  //post daysoff date
-			url : server_url + 'api/weekdays/',
-			dataType: "JSON",
-			data: JSON.stringify({
-						"doctorId": data.id,
-						"dayindex": '',
-						"time_arr": '',
-						//"date": document.getElementById('dayoff_date').value
-					}),
-			contentType: "application/json",
-			success: function(data){
-				var str_id = data['data']['_id'];
-				var dayoff = new Date(data['data']['date']);
-				var dayoff_date = dayoff.toLocaleString('en-us',{month:'short', year:'numeric', day:'numeric'})
-				document.getElementById('daysoff_area').innerHTML += '<tr id="'+data['data']['_id']+'">\
-							<td style="border:1px solid #0e446d; ">'+dayoff_date+'</td>\
-							<td style="border:1px solid #0e446d; width: 20px;"><button onclick="dayoff_delete(\''+str_id.toString()+'\')" style="margin: 5px;" class="btn">Delete</button></td>\
-						</tr>';
-				document.getElementById('msg').innerHTML = 'Added successfully!';
-				setTimeout(function(){ document.getElementById('msg').innerHTML = "" }, 4000);
-			}
-		});
-	}*/
 	
 	jQuery.ajax({
 		type: "GET",	//get all weekdays hrs
@@ -232,7 +207,7 @@ var earning = 0;
 						table = jQuery('#example').DataTable(); 
 						var num = parseInt(time)+1;
 						if(Number(time) < 9){
-							time = "0"+time+":00 AM -- "+ num +":00 AM";
+							time = time+":00 AM -- "+ "0" + num +":00 AM";
 						}else if(Number(time) > 9 && Number(time) < 13){
 							if(num == 12){
 								time = time+":00 AM -- "+ num +":00 PM";
@@ -270,8 +245,6 @@ var earning = 0;
 			var service_name = '';
 			var service_price = '';
 			var data = dataresult;
-			//console.log("len"+data['data'].length);
-			//jQuery(document).ready(function () {
 		
 				document.getElementById('tsession').innerHTML = data['data'].length;
 				document.getElementById('appointment_table').innerHTML = '';
@@ -290,7 +263,6 @@ var earning = 0;
 					pagingType: 'full_numbers',
 				});
 				
-			//});
 		},
 		error: function(xhr, status, error){
 		}
